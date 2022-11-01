@@ -2,11 +2,36 @@ import axios from 'axios';
 import { useState } from 'react';
 
 function App() {
+  const [location, setLocation] = useState('')
+
+  const cityURL = `http://dataservice.accuweather.com/locations/v1/cities/search?apikey=HhZNFDQE6xUAxBSeWc9AsUGTlPSqsb1e&q=${location}`
+
+  const getCity = (e) => {
+    if (e.key === 'Enter') {
+      axios.get(cityURL)
+      .then((res) => {
+        return res.data[0].Key
+      })
+      .then((id) => {
+        return axios.get(`http://dataservice.accuweather.com/currentconditions/v1/${id}?apikey=HhZNFDQE6xUAxBSeWc9AsUGTlPSqsb1e`)
+      })
+      .then((res) => {
+        console.log(res.data)
+      })
+      setLocation('')
+    }
+  }
+
   return (
     <div className="App">
       <div className="search">
         <input 
         type="text" 
+        value={location}
+        onChange={(e) => {
+          setLocation(e.target.value)
+        }}
+        onKeyDown={getCity}
         placeholder="Enter Location"
         />
       </div>
