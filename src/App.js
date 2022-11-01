@@ -2,9 +2,14 @@ import axios from 'axios';
 import { useState } from 'react';
 
 function App() {
-  // Left off 20:00
   return (
     <div className="App">
+      <div className="search">
+        <input 
+        type="text" 
+        placeholder="Enter Location"
+        />
+      </div>
       <div className="container">
         <div className="top">
           <div className="location">
