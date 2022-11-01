@@ -2,18 +2,20 @@ import axios from 'axios';
 import { useState } from 'react';
 
 function App() {
-  // Left off 12:00
+  // Left off 15:30
   return (
     <div className="App">
       <div className="container">
         <div className="top">
-          <p>Denver</p>
-        </div>
-        <div className="temp">
-          <h1>60 F</h1>
-        </div>
-        <div className="description">
-          <p>Sunny</p>
+          <div className="location">
+            <p>Denver</p>
+          </div>
+          <div className="temp">
+            <h1>60 F</h1>
+          </div>
+          <div className="description">
+            <p>Sunny</p>
+          </div>
         </div>
         <div className="bottom">
           <div className="feels">
