@@ -6,6 +6,9 @@ function App() {
   const [cityName, setCityName] = useState('')
   const [temp, setTemp] = useState('')
   const [forecast, setForecast] = useState('')
+  const [feelsLike, setFeelsLike] = useState('')
+  const [humidity, setHumidity] = useState('')
+  const [wind, setWind] = useState('')
   const [show, setShow] = useState(false)
 
   const cityURL = `http://dataservice.accuweather.com/locations/v1/cities/search?apikey=HhZNFDQE6xUAxBSeWc9AsUGTlPSqsb1e&q=${location}`
@@ -22,9 +25,12 @@ function App() {
     const cityData = cityResponse.data[0]
     setCityName(cityData.EnglishName)
     const cityID = cityData.Key
-    const weatherData = await axios.get(`http://dataservice.accuweather.com/currentconditions/v1/${cityID}?apikey=HhZNFDQE6xUAxBSeWc9AsUGTlPSqsb1e`)
+    const weatherData = await axios.get(`http://dataservice.accuweather.com/currentconditions/v1/${cityID}?apikey=HhZNFDQE6xUAxBSeWc9AsUGTlPSqsb1e&details=true`)
     setTemp(weatherData.data[0].Temperature.Imperial.Value)
+    setFeelsLike(weatherData.data[0].RealFeelTemperature.Imperial.Value)
     setForecast(weatherData.data[0].WeatherText)
+    setHumidity(weatherData.data[0].RelativeHumidity)
+    setWind(weatherData.data[0].WindGust.Speed.Imperial.Value)
     setLocation('')
   }
 
@@ -55,15 +61,15 @@ function App() {
         </div>
         <div className="bottom">
           <div className="feels">
-            <p>65 F</p>
+            <p>{feelsLike} {show && <span>°F</span>}</p>
             <p>Feels like</p>
           </div>
           <div className="humidity">
-            <p>10%</p>
+            <p>{humidity}{show && <span>%</span>}</p>
             <p>Humidity</p>
           </div>
           <div className="wind">
-            <p>10 MPH</p>
+            <p>{wind} {show && <span>MPH</span>}</p>
             <p>Wind Speed</p>
           </div>
         </div>
