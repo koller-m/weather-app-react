@@ -3,23 +3,27 @@ import { useState } from 'react';
 
 function App() {
   const [location, setLocation] = useState('')
+  const [cityName, setCityName] = useState('')
+  const [temp, setTemp] = useState('')
+  const [forecast, setForecast] = useState('')
 
   const cityURL = `http://dataservice.accuweather.com/locations/v1/cities/search?apikey=HhZNFDQE6xUAxBSeWc9AsUGTlPSqsb1e&q=${location}`
 
-  const getCity = (e) => {
+  const listenFunc = (e) => {
     if (e.key === 'Enter') {
-      axios.get(cityURL)
-      .then((res) => {
-        return res.data[0].Key
-      })
-      .then((id) => {
-        return axios.get(`http://dataservice.accuweather.com/currentconditions/v1/${id}?apikey=HhZNFDQE6xUAxBSeWc9AsUGTlPSqsb1e`)
-      })
-      .then((res) => {
-        console.log(res.data)
-      })
-      setLocation('')
+      getData()
     }
+  }
+
+  const getData = async () => {
+    const cityResponse = await axios.get(cityURL)
+    const cityData = cityResponse.data[0]
+    setCityName(cityData.EnglishName)
+    const cityID = cityData.Key
+    const weatherData = await axios.get(`http://dataservice.accuweather.com/currentconditions/v1/${cityID}?apikey=HhZNFDQE6xUAxBSeWc9AsUGTlPSqsb1e`)
+    setTemp(weatherData.data[0].Temperature.Imperial.Value)
+    setForecast(weatherData.data[0].WeatherText)
+    setLocation('')
   }
 
   return (
@@ -31,20 +35,20 @@ function App() {
         onChange={(e) => {
           setLocation(e.target.value)
         }}
-        onKeyDown={getCity}
+        onKeyDown={listenFunc}
         placeholder="Enter Location"
         />
       </div>
       <div className="container">
         <div className="top">
           <div className="location">
-            <p>Denver</p>
+            <p>{cityName}</p>
           </div>
           <div className="temp">
-            <h1>60 F</h1>
+            <h1>{temp} <span>°F</span></h1>
           </div>
           <div className="description">
-            <p>Sunny</p>
+            <p>{forecast}</p>
           </div>
         </div>
         <div className="bottom">
