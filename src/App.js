@@ -12,7 +12,7 @@ function App() {
   const [wind, setWind] = useState('')
   const [show, setShow] = useState(false)
 
-  const cityURL = `http://dataservice.accuweather.com/locations/v1/cities/search?apikey=${WEATHER_API_KEY}=${location}`
+  const url = `https://api.openweathermap.org/data/2.5/weather?q=${location}&units=imperial&appid=${WEATHER_API_KEY}`
 
   const listenFunc = (e) => {
     if (e.key === 'Enter') {
@@ -22,16 +22,14 @@ function App() {
   }
 
   const getData = async () => {
-    const cityResponse = await axios.get(cityURL)
-    const cityData = cityResponse.data[0]
-    setCityName(cityData.EnglishName)
-    const cityID = cityData.Key
-    const weatherData = await axios.get(`http://dataservice.accuweather.com/currentconditions/v1/${cityID}?apikey=${WEATHER_API_KEY}=true`)
-    setTemp(weatherData.data[0].Temperature.Imperial.Value)
-    setFeelsLike(weatherData.data[0].RealFeelTemperature.Imperial.Value)
-    setForecast(weatherData.data[0].WeatherText)
-    setHumidity(weatherData.data[0].RelativeHumidity)
-    setWind(weatherData.data[0].WindGust.Speed.Imperial.Value)
+    const response = await axios.get(url)
+    setCityName(response.data.name)
+    setTemp(response.data.main ? response.data.main.temp.toFixed() : null)
+    setForecast(response.data.weather ? response.data.weather[0].main : null)
+    setFeelsLike(response.data.main ? response.data.main.feels_like.toFixed() : null)
+    setHumidity(response.data.main ? response.data.main.humidity : null)
+    setWind(response.data.wind ? response.data.wind.speed.toFixed() : null)
+    console.log(response.data)
     setLocation('')
   }
 
