@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { useState } from 'react';
+import { WEATHER_API_KEY } from './apikey';
 
 function App() {
   const [location, setLocation] = useState('')
@@ -11,7 +12,7 @@ function App() {
   const [wind, setWind] = useState('')
   const [show, setShow] = useState(false)
 
-  const cityURL = `http://dataservice.accuweather.com/locations/v1/cities/search?apikey=HhZNFDQE6xUAxBSeWc9AsUGTlPSqsb1e&q=${location}`
+  const cityURL = `http://dataservice.accuweather.com/locations/v1/cities/search?apikey=${WEATHER_API_KEY}=${location}`
 
   const listenFunc = (e) => {
     if (e.key === 'Enter') {
@@ -25,7 +26,7 @@ function App() {
     const cityData = cityResponse.data[0]
     setCityName(cityData.EnglishName)
     const cityID = cityData.Key
-    const weatherData = await axios.get(`http://dataservice.accuweather.com/currentconditions/v1/${cityID}?apikey=HhZNFDQE6xUAxBSeWc9AsUGTlPSqsb1e&details=true`)
+    const weatherData = await axios.get(`http://dataservice.accuweather.com/currentconditions/v1/${cityID}?apikey=${WEATHER_API_KEY}=true`)
     setTemp(weatherData.data[0].Temperature.Imperial.Value)
     setFeelsLike(weatherData.data[0].RealFeelTemperature.Imperial.Value)
     setForecast(weatherData.data[0].WeatherText)
