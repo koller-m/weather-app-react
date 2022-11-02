@@ -62,15 +62,15 @@ function App() {
         {show &&
           <div className="bottom">
             <div className="feels">
-              <p>{feelsLike} {show && <span>°F</span>}</p>
+              <p>{feelsLike} <span>°F</span></p>
               <p>Feels like</p>
             </div>
             <div className="humidity">
-              <p>{humidity}{show && <span>%</span>}</p>
+              <p>{humidity}<span>%</span></p>
               <p>Humidity</p>
             </div>
             <div className="wind">
-              <p>{wind} {show && <span>MPH</span>}</p>
+              <p>{wind} <span>MPH</span></p>
               <p>Wind Speed</p>
             </div>
           </div>
