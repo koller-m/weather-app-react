@@ -6,12 +6,14 @@ function App() {
   const [cityName, setCityName] = useState('')
   const [temp, setTemp] = useState('')
   const [forecast, setForecast] = useState('')
+  const [show, setShow] = useState(false)
 
   const cityURL = `http://dataservice.accuweather.com/locations/v1/cities/search?apikey=HhZNFDQE6xUAxBSeWc9AsUGTlPSqsb1e&q=${location}`
 
   const listenFunc = (e) => {
     if (e.key === 'Enter') {
       getData()
+      setShow(true)
     }
   }
 
@@ -45,7 +47,7 @@ function App() {
             <p>{cityName}</p>
           </div>
           <div className="temp">
-            <h1>{temp} <span>°F</span></h1>
+            <h1>{temp} {show && <span>°F</span>}</h1>
           </div>
           <div className="description">
             <p>{forecast}</p>
