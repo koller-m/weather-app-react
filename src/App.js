@@ -29,7 +29,6 @@ function App() {
     setFeelsLike(response.data.main ? response.data.main.feels_like.toFixed() : null)
     setHumidity(response.data.main ? response.data.main.humidity : null)
     setWind(response.data.wind ? response.data.wind.speed.toFixed() : null)
-    console.log(response.data)
     setLocation('')
   }
 
