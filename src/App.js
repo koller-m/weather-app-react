@@ -42,7 +42,7 @@ function App() {
           setLocation(e.target.value)
         }}
         onKeyDown={listenFunc}
-        placeholder="Enter Location"
+        placeholder="Enter City"
         />
       </div>
       <div className="container">
