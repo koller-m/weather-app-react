@@ -88,3 +88,9 @@ p {
 ::placeholder {
   color: #fff;
 }
+
+@media (max-height: 900px) {
+  .container {
+    height: 500px;
+  }
+}
